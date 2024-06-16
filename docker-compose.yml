@@ -1,0 +1,24 @@
+version: '3.8'
+services:
+  book-server:
+    build: .
+    container_name: book-server
+    ports:
+      - "8080:8080"
+    depends_on:
+      - book-db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://book-db:5432/ewm-mainDB
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+
+  book-db:
+    image: postgres:13.7-alpine
+    container_name: book-db
+    ports:
+      - "6542:5432"
+    restart: on-failure
+    environment:
+      - POSTGRES_DB=ewm-mainDB
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
